@@ -3,20 +3,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("foto", {
+    await queryInterface.createTable("alunos", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      filename: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      original_name: {
+      surname: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      turma_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "turmas",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
         type: Sequelize.DATE,
@@ -30,6 +40,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("foto");
+    await queryInterface.dropTable("alunos");
   },
 };

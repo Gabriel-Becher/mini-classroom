@@ -1,24 +1,32 @@
 "use strict";
 
-const { SELECT } = require("sequelize/lib/query-types");
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("aviso", {
+    await queryInterface.createTable("professors", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      content: {
-        type: Sequelize.TEXT,
+      surname: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      turma_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "turmas",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
         type: Sequelize.DATE,
@@ -32,6 +40,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("aviso");
+    await queryInterface.dropTable("professors");
   },
 };

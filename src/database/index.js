@@ -1,6 +1,13 @@
 const Sequelize = require("sequelize");
 const databaseConfig = require("../config/database");
-const models = [];
+const Disciplina = require("../models/Disciplina");
+const Professor = require("../models/Professor");
+const Turma = require("../models/Turma");
+const Aviso = require("../models/Aviso");
+const Foto = require("../models/Foto");
+const Aluno = require("../models/Aluno");
+
+const models = [Disciplina, Professor, Turma, Aviso, Foto, Aluno];
 
 const connection = new Sequelize(databaseConfig);
 
