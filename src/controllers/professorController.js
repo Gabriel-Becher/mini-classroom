@@ -1,8 +1,11 @@
+const Disciplina = require("../models/Disciplina");
 const Professor = require("../models/Professor");
 
 exports.index = async (req, res) => {
   if (req.params.id) {
-    const professor = await Professor.findByPk(req.params.id);
+    const professor = await Professor.findByPk(req.params.id, {
+      include: { model: Disciplina, attributes: ["id", "name"] },
+    });
     return professor
       ? res.json(professor)
       : res.status(404).json({ error: "Professor not found" });

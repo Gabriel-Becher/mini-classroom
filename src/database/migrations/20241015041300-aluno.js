@@ -13,10 +13,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      surname: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        unique: true,
       },
       turma_id: {
         type: Sequelize.INTEGER,

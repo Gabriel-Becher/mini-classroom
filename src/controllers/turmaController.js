@@ -2,7 +2,9 @@ const Turma = require("../models/Turma");
 
 exports.index = async (req, res) => {
   if (req.params.id) {
-    const turma = await Turma.findByPk(req.params.id);
+    const turma = await Turma.findByPk(req.params.id, {
+      include: { all: true },
+    });
     return turma
       ? res.json(turma)
       : res.status(404).json({ error: "Turma not found" });
@@ -14,11 +16,18 @@ exports.index = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
-  const name = req.body.name;
+  const { name, description } = req.body;
+  const errors = [];
   if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+    errors.push("name is required");
   }
-  const turma = await Turma.create({ name });
+  if (!description) {
+    errors.push("description is required");
+  }
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+  const turma = await Turma.create({ name, description });
   return res.json(turma);
 };
 
