@@ -17,7 +17,7 @@ exports.show = async (req, res) => {
     include: [
       {
         model: Aluno,
-        attributes: ["name"],
+        attributes: ["id", "name"],
         include: {
           model: Foto,
           attributes: ["id", "filename", "url"],
