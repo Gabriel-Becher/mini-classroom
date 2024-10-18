@@ -6,7 +6,7 @@ const alunoController = require("../controllers/alunoController");
 
 alunoRouter.get("/", alunoController.index);
 
-alunoRouter.get("/:id", alunoController.index);
+alunoRouter.get("/:id", alunoController.show);
 
 alunoRouter.post("/", alunoController.store);
 

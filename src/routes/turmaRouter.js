@@ -6,7 +6,7 @@ const turmaRouter = new Router();
 
 turmaRouter.get("/", turmaController.index);
 
-turmaRouter.get("/:id", turmaController.index);
+turmaRouter.get("/:id", turmaController.show);
 
 turmaRouter.post("/", turmaController.store);
 

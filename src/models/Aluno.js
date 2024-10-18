@@ -13,15 +13,6 @@ class Aluno extends Sequelize.Model {
             },
           },
         },
-        surname: {
-          type: Sequelize.STRING,
-          defaultValue: "",
-          validate: {
-            notEmpty: {
-              msg: "O campo sobrenome não pode ser vazio",
-            },
-          },
-        },
       },
       {
         sequelize,

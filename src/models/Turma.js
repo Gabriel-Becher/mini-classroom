@@ -32,7 +32,7 @@ class Turma extends Sequelize.Model {
   static associate(models) {
     this.hasMany(models.Aviso, { foreignKey: "turma_id" });
     this.hasMany(models.Aluno, { foreignKey: "turma_id" });
-    this.hasOne(models.Professor, { foreignKey: "professor_id" });
+    this.hasOne(models.Professor, { foreignKey: "turma_id" });
   }
 }
 

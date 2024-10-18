@@ -54,7 +54,7 @@ exports.delete = (req, res) => {
     })
     .catch((e) => {
       return res.status(400).json({
-        errors: ["Aluno não existe"],
+        errors: ["Erro ao deletar foto"],
       });
     });
 };

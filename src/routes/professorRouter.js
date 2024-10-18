@@ -6,7 +6,7 @@ const professorRouter = new Router();
 
 professorRouter.get("/", professorController.index);
 
-professorRouter.get("/:id", professorController.index);
+professorRouter.get("/:id", professorController.show);
 
 professorRouter.post("/", professorController.store);
 

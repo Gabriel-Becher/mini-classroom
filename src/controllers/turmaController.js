@@ -1,18 +1,41 @@
 const Turma = require("../models/Turma");
+const Aluno = require("../models/Aluno");
+const Foto = require("../models/Foto");
+const Professor = require("../models/Professor");
+const Aviso = require("../models/Aviso");
 
 exports.index = async (req, res) => {
-  if (req.params.id) {
-    const turma = await Turma.findByPk(req.params.id, {
-      include: { all: true },
-    });
-    return turma
-      ? res.json(turma)
-      : res.status(404).json({ error: "Turma not found" });
-  }
   const turmas = await Turma.findAll();
-  return turmas
-    ? res.json(turmas)
-    : res.status(404).json({ error: "Turmas not found" });
+  return res.json(turmas);
+};
+
+exports.show = async (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json({ error: "Turma_id is required" });
+  }
+  const turma = await Turma.findByPk(req.params.id, {
+    include: [
+      {
+        model: Aluno,
+        attributes: ["name"],
+        include: {
+          model: Foto,
+          attributes: ["id", "filename", "url"],
+        },
+      },
+      {
+        model: Professor,
+        attributes: ["id", "name"],
+      },
+      {
+        model: Aviso,
+        attributes: ["id", "title", "content"],
+      },
+    ],
+  });
+  return turma
+    ? res.json(turma)
+    : res.status(404).json({ error: "Turma not found" });
 };
 
 exports.store = async (req, res) => {
@@ -27,8 +50,12 @@ exports.store = async (req, res) => {
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
-  const turma = await Turma.create({ name, description });
-  return res.json(turma);
+  try {
+    const turma = await Turma.create({ name, description });
+    return res.json(turma);
+  } catch (e) {
+    return res.status(500).json({ error: "Turma not created" });
+  }
 };
 
 exports.update = async (req, res) => {
@@ -36,9 +63,13 @@ exports.update = async (req, res) => {
   if (!turma) {
     return res.status(404).json({ error: "Turma not found" });
   }
-  turma.name = req.body.name;
-  await turma.save();
-  return res.json(turma);
+  turma.descriptopm = req.body.description;
+  try {
+    await turma.save();
+    return res.json(turma);
+  } catch (e) {
+    return res.status(500).json({ error: "Turma not updated" });
+  }
 };
 
 exports.delete = async (req, res) => {
@@ -46,6 +77,10 @@ exports.delete = async (req, res) => {
   if (!turma) {
     return res.status(404).json({ error: "Turma not found" });
   }
-  await turma.destroy();
-  return res.json({ message: "Turma deleted" });
+  try {
+    await turma.destroy();
+    return res.json({ message: "Turma deleted" });
+  } catch (e) {
+    return res.status(500).json({ error: "Turma not deleted" });
+  }
 };

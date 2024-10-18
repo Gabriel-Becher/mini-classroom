@@ -6,7 +6,7 @@ const avisoRouter = new Router();
 
 avisoRouter.get("/", avisoController.index);
 
-avisoRouter.get("/:id", avisoController.index);
+avisoRouter.get("/:id", avisoController.show);
 
 avisoRouter.post("/", avisoController.store);
 
