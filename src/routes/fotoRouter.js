@@ -8,4 +8,6 @@ fotoRouter.post("/", fotoController.store);
 
 fotoRouter.delete("/:id", fotoController.delete);
 
+fotoRouter.put("/:id", fotoController.update);
+
 module.exports = fotoRouter;

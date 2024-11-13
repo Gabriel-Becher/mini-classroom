@@ -58,3 +58,29 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  return upload(req, res, async (err) => {
+    if (err) {
+      fs.rmSync(filepath + "/" + req.file.filename);
+      return res.status(400).json({
+        errors: [err.code],
+      });
+    }
+    try {
+      const { originalname, filename } = req.file;
+      console.log(originalname, filename);
+      const { aluno_id } = req.body;
+      const foto = await Foto.findOne({ where: { aluno_id } });
+      foto.original_name = originalname;
+      foto.filename = filename;
+      await foto.save();
+      return res.json(foto);
+    } catch (e) {
+      fs.rmSync(filepath + "/" + req.file.filename);
+      return res.status(400).json({
+        errors: [e.message],
+      });
+    }
+  });
+};
