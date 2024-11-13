@@ -1,14 +1,28 @@
 const Aluno = require("../models/Aluno");
 const Foto = require("../models/Foto");
+const { OP } = require("sequelize");
 
 exports.index = async (req, res) => {
+  const nome = req.query.name;
+  if (!nome) {
+    const alunos = await Aluno.findAll({
+      include: {
+        model: Foto,
+        attributes: ["filename", "url"],
+      },
+    });
+    return res.json(alunos);
+  }
   const alunos = await Aluno.findAll({
+    where: { name: { [OP.like]: `%${nome}%` } },
     include: {
       model: Foto,
       attributes: ["filename", "url"],
     },
   });
-  return res.json(alunos);
+  return alunos
+    ? res.json(alunos)
+    : res.status(404).json({ error: "Not found" });
 };
 
 exports.show = async (req, res) => {
