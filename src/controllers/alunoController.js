@@ -1,6 +1,6 @@
 const Aluno = require("../models/Aluno");
 const Foto = require("../models/Foto");
-const { OP } = require("sequelize");
+const Sequelize = require("sequelize");
 
 exports.index = async (req, res) => {
   const nome = req.query.name;
@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
     return res.json(alunos);
   }
   const alunos = await Aluno.findAll({
-    where: { name: { [OP.substring]: nome } },
+    where: { name: { [Sequelize.Op.substring]: nome } },
     include: {
       model: Foto,
       attributes: ["filename", "url"],
