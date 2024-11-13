@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
     return res.json(alunos);
   }
   const alunos = await Aluno.findAll({
-    where: { name: { [OP.like]: `%${nome}%` } },
+    where: { name: { [OP.substring]: nome } },
     include: {
       model: Foto,
       attributes: ["filename", "url"],
