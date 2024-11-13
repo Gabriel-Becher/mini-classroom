@@ -4,7 +4,7 @@ const alunoRouter = new Router();
 
 const alunoController = require("../controllers/alunoController");
 
-alunoRouter.get("/?name", alunoController.index);
+alunoRouter.get("/", alunoController.index);
 
 alunoRouter.get("/:id", alunoController.show);
 
