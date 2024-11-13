@@ -13,6 +13,7 @@ exports.index = async (req, res) => {
     });
     return res.json(alunos);
   }
+  return res.json(nome);
   const alunos = await Aluno.findAll({
     where: { name: { [OP.substring]: nome } },
     include: {
