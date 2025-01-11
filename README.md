@@ -1,8 +1,1 @@
-# Aplicação para consumo de uma API Rest previamente desenvolvida
-#Páginas Disponíveis
-##Listagem e cadastro de Alunos e suas Fotos
-##Listagem e cadastro de Professores
-
-#Paginas a serem implementadas
-- Turmas
-- Avisos
+# Aplicação para ser consumida por uma aplicação React em uma disciplina de Desenvolvimento Web do curso de Eng. de Software
